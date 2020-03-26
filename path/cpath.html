@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    .pathAnimate{
+        width: 300px;
+    }
+</style>
+</head>
+
+<body>
+    <svg viewBox="-200 -400 800 800" class="pathAnimate">
+        <rect x="0" y="0" width="50" height="150" fill="rgba(0,255,255,.6)" ">
+            <animateMotion 
+            path="M 0 0L 100 100A 200 200 0 1 0 0 -100"
+            dur="3s"
+            repeatCount="3"
+            rotate="auto"/>
+        </rect>
+        <path id="mpath" d="M 0 0L 100 100A 200 200 0 1 0 0 -100"  stroke="gray" fill="none"/>
+    </svg>
+    <hr/>
+    <p>animate触发机制</p>
+    <svg viewBox="0 0 400 400" id="svg" width="320" height="200" xmlns="http://www.w3.org/2000/svg">
+        <circle id="circle" cx="100" cy="100" r="50"></circle>
+        <text font-family="microsoft yahei" font-size="100" y="130" x="180" fill='red'>马
+            <animate attributeName="x" values="160; 200;160; 200; 180;" begin="circle.click" dur=".5s" />
+        </text>
+    </svg>
+</body>
+
+</html>

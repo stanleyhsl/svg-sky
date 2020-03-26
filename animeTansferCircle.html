@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>anime库</title>
+    <script src="/test/lib/anime.min.js"></script>
+    <style>
+        svg {
+            display: block;
+            margin: 0 auto;
+        }
+
+        path {
+            fill: none;
+            stroke: black;
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+    </style>
+</head>
+<body>
+    <p>anime.js库只有10.9kb</p>
+    <svg class="shape" width="128" height="128" viewBox="0 0 222 222">
+        <polygon points="64 68.64 8.574 100 63.446 67.68 64 4 64.554 67.68 119.426 100"></polygon>
+        </svg>
+      <script>
+         var svgAttributes = anime({
+                duration: 2000,
+                loop: true,
+                targets: '.shape polygon',
+                points: '64 128 8.574 96 8.574 32 64 0 119.426 32 119.426 96'
+            });
+      </script>
+</body>
+</html>

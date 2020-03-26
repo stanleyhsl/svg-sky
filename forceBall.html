@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>位移动画-力导向图</title>
+    <script src="/test/forceBall.js"></script>
+    <style>
+        html,body{
+            box-sizing: border-box;
+        }
+        svg{
+            border: 1px solid #bbb;
+            max-height: 100vh;
+        }
+        button{
+            width: 200px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <svg viewBox="-400 -400 800 800">
+        <path id="links" stroke-dasharray="20,5,5" stroke="pink"></path>
+        <circle cx="0" cy="0" r="5" fill="pink"/>
+    </svg>
+    <div >
+        小球数量(2~20)： <input id="count" type='number' value="3">
+        <button onclick="reStart()">开始</button>
+    </div>
+
+    <script>
+        // 产生的所有点放在points里
+        var svg = document.querySelector('svg');
+        const svgLine =document.getElementById('links');// 小球之间的连线
+        const relation = 300; // 修正系数，影响小球稳定后的距离
+        const k = 0.05; // 弹性系数
+        let lastFrameTime = Date.now(); // 记录渲染时间点，也就是当前时间，
+        const points =[]; //所有的点放在这里
+
+        // 重新启动
+        function reStart(){
+            points.forEach(it=>it.release());
+            points.length=0;
+            lastFrameTime = Date.now(); 
+
+
+            let count = document.getElementById('count').value;
+            count = Math.max(2,count);
+            count = Math.min(20,count);
+            document.getElementById('count').value=count;
+            for(let i=0;i<count;i++){
+                points.push(new Point(i,count).mounte(svg));
+            }
+
+            window.requestAnimationFrame(update);
+        }
+        // 创建圆circle,位置随机，并添加到svg标签内
+        reStart();
+
+        function update() {
+            var frameTime = Date.now();
+            var t = frameTime - lastFrameTime; // 过去了的ms
+
+            t /= 100;// 把时间差取分段
+
+            // 计算每个点的加速度、速度、圆心座标，进行分析，得到小球的位置
+            let maxf=0;//所有点中加速度最大的那一个
+            points.forEach(function(pa) {
+                var a = new Vector(); // 加速度=a/m
+
+                points.forEach(function(pb) {
+                    if (pa == pb) return;
+
+                    var VecDist = pa.s.vectDistFrom(pb.s);
+                    var delta = VecDist.absValue() - relation;
+                    a = a.plus(VecDist.accelerate(delta * k));
+                });
+
+                pa.a = a;
+                maxf=Math.max(maxf,a.absValue())
+                pa.v = pa.v.plus(a.multipy(t)).multipy(0.98);// 速度=v*a*t;衰减系数0.98
+                pa.s = pa.s.plus(pa.v.multipy(t));
+
+                // 给小球设置位置
+                pa.circle.setAttribute('cx', pa.s._x);
+                pa.circle.setAttribute('cy', pa.s._y);
+            });
+
+            // 更新连线 
+            var linkPath = [];
+            points.forEach(function(pa) {
+                var sa = pa.s;
+                points.forEach(function(pb) {
+                if (pa == pb) return;
+                var sb = pb.s;
+                linkPath = linkPath.concat([
+                    'M', sa._x, sa._y,
+                    'L', sb._x, sb._y
+                ]);
+                });
+            });
+
+            svgLine.setAttribute('d', linkPath.join(' '));
+
+            // 动画停止,变灰
+            if(maxf < .12){
+                svgLine.setAttribute('stroke', '#eee');
+                svgLine.setAttribute('stroke-dasharray', '');
+                points.forEach(function(pa) {
+                    pa.circle.setAttribute('fill', '#eee');
+                });
+                return;
+            }
+
+            lastFrameTime = frameTime; //更新时间
+            window.requestAnimationFrame(update);
+        }
+
+       
+    </script>
+</body>
+</html>
+
+
+

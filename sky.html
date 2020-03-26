@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<style>
+    html,body{
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background: #001122;
+        line-height: 0;
+        font-size: 0;
+    }
+</style>
+<body class="study">
+    <svg id="skySvg" onclick="toggleAnimation()" width="100%" height="100%" viewBox="-400 -300 800 600"
+        preserveAspectRatio="xMidYMid slice">
+        <defs>
+            <polygon id="star" points="0 -10 2 -2 10 0 2 2 0 10 -2 2 -10 0 -2 -2" fill="white"/>
+        </defs>
+
+        <!-- 上部天空 -->
+        <g id="sky-upper">
+            <!-- 背景星星 -->
+            <g id="star-group"></g>
+
+            <!-- 月亮 -->
+            <g id="moon-group" >
+                <!-- 白色不透明，黑色透明 -->
+                <mask id="moon-mask" >
+                    <circle cx="-250" cy="-150" r="80" fill="white"></circle>
+                    <circle cx="-200" cy="-200" r="80" fill="black"></circle>
+                </mask>
+                <circle  cx="-250" cy="-150" r="80" mask="url(#moon-mask)"  fill="yellow"></circle>
+            </g>
+
+            <!-- 灯塔 -->
+            <g id="light-tower" transform="translate(250,0)">
+                <defs>
+                    <!-- 射灯的渐变 -->
+                    <linearGradient id="tower" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0" stop-color="#999"/>
+                        <stop offset="1" stop-color="#333"/>
+                    </linearGradient>
+                    <radialGradient id="light-r" cx="0.5" cy="0.5" r="0.5">
+                        <stop offset="0" stop-color="rgba(255,255,255,.8)"/>
+                        <stop offset="1" stop-color="rgba(255,255,255,0)"/>
+                    </radialGradient>
+                    <clipPath id="light-clip">
+                        <polygon points="0 0 -400 -15 -400 15" fill="rgba(255,0,0,.5)">
+                            <animateTransform
+                                attributeName="transform"
+                                attributeType="XML"
+                                type="rotate"
+                                from="0"
+                                to="360"
+                                dur="10s"
+                                repeatCount="indefinite"/>
+                        </polygon>
+                        <circle cx="0" cy="0" r="2"/>
+                    </clipPath>
+                </defs>
+                <polygon points="0 0 5 50 -5 50" fill="url(#tower)"/>
+                <ellipse cx="0" cy="0" rx="300" ry="100" fill="url(#light-r)" clip-path="url(#light-clip)"/>
+            </g>
+        </g>
+
+        <!-- 海岸线 -->
+        <line x1="-400" y1="50" x2="400" y2="50" stroke="lightgray" stroke-width="5" stroke-dasharray="10,5"/>
+        <line x1="-400" y1="50" x2="400" y2="54" stroke="white" stroke-width="3" />
+
+        <!-- 倒影 -->
+        <g id="sky-reflect" mask="url(#fade-mask)" transform="translate(0,50)">
+            <defs>
+                <!-- 水面倒映 -->
+                <linearGradient id="fade-fill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="rgba(255,255,255,.65)"/>
+                    <stop offset=".5" stop-color="rgba(255,255,255,.1)"/>
+                </linearGradient>
+                <mask id="fade-mask" >
+                    <rect x="-400" y="0" width="800" height="300" fill="url(#fade-fill)"/>
+                </mask>
+            </defs>
+            <!-- 使用mask来提供渐变效果 -->
+            <use xlink:href="#sky-upper" transform="scale(1,-1) translate(0,-50)" >
+        </g>
+    </svg>
+
+</body>
+<script>
+    var SVG_NS = 'http://www.w3.org/2000/svg';
+    var XLINK_NS = 'http://www.w3.org/1999/xlink';
+    var paper = document.querySelector('svg');
+
+    renderStart();
+
+    function random(min,max){
+        let ret = min +(max-min)*Math.random();
+        return ret.toFixed(1);
+    }
+
+    function use(origin){
+        const _use = document.createElementNS(SVG_NS,'use');
+        _use.setAttributeNS(XLINK_NS,'xlink:href','#'+origin.id);   
+        return _use;
+    }
+
+   function renderStart(){
+        const starRef = document.getElementById('star');
+        const starGroup = document.getElementById('star-group');
+        let startCount =500;
+
+        while (startCount--){
+          let  star = use(starRef);
+            star.setAttribute('opacity',random(.1,.6));
+            star.setAttribute('transform',`translate(${random(-400,400)},${random(-300,50)}) scale(${random(.1,.7)}) rotate(${random(0,45)})`);
+            starGroup.appendChild(star)
+        }
+    }
+
+    let play=true;
+    function toggleAnimation(){
+        if(play)
+            skySvg.pauseAnimations();
+        else
+            skySvg.unpauseAnimations();
+
+        play = !play;
+    }
+</script>
+
+</html>

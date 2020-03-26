@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>菜单展开</title>
+    <script src="/test/lib/TweenMax.min.js"></script>
+    <script src="/test/lib/gsap-3.2.6.min.js"></script>
+    <style>
+        .hamburger{
+            width:300px;
+            height: 220px;
+            border:1px solid;
+        }
+       svg{
+           border:1px solid green;
+       }
+    </style>
+</head>
+<body>
+    <h1>GreenSock实现的baze曲线动画</h1>
+    <svg class="hamburger" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 200">
+    <line class="line-one" x1="0" y1="188" x2="5" y2="188" fill="none" stroke="red" stroke-width="4"/>
+    <line class="line-two" x1="0" y1="50" x2="5" y2="50" fill="none" stroke="green" stroke-width="4"/>
+    </svg>
+    <hr>
+    <button class="btn1" onclick="crossFun()">开始step动画</button>
+    <button class="btn1" onclick="bunce()">开始bounce动画</button>
+    <p> 在线演示：https://greensock.com/ease-visualizer</p>
+    <script>
+        const hamburger =document.querySelector('.hamburger');
+        const lineOne = hamburger.querySelector('.line-one');
+        const lineTwo = hamburger.querySelector('.line-two');
+        const timeLine = new TimelineMax({paused:true,reversed:true});
+        timeLine.to(lineOne, {duration:2.5, scaleX: 20, ease:  "steps(6)" ,y:-180});
+        function crossFun(){
+            timeLine.reversed()?timeLine.play():timeLine.reverse();
+        }
+        function bunce(){
+            gsap.to(lineTwo,{duration:2.5, scaleX: 30, ease:  "bounce"});
+        }
+    </script>
+</body>
+</html>

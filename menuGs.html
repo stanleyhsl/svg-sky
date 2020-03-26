@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>菜单展开</title>
+    <script src="/test/lib/TweenMax.min.js"></script>
+    <script src="/test/lib/gsap.min.js"></script>
+    <style>
+        .hamburger{
+            width:300px;
+            height: 220px;
+            border:1px solid;
+        }
+       
+    </style>
+</head>
+<body>
+    <h1>GreenSock实现的关键帧动画</h1>
+    <svg class="hamburger" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <line class="line-one" x1="25" y1="42" x2="75" y2="42" fill="none" stroke="red" stroke-width="4"/>
+    <line class="line-two" x1="25" y1="50" x2="75" y2="50" fill="none" stroke="green" stroke-width="4"/>
+    <line class="line-three" x1="25" y1="58" x2="75" y2="58" fill="none" stroke="blue" stroke-width="4"/>
+    </svg>
+    <hr>
+    <button class="btn1" onclick="crossFun()">变成X动画</button>
+    <button class="btn2" onclick="minusFun()">变成——动画</button>
+    <p> 两个动画可以组合起来</p>
+    <script>
+        const hamburger =document.querySelector('.hamburger');
+        const lineOne = hamburger.querySelector('.line-one');
+        const lineTwo = hamburger.querySelector('.line-two');
+        const lineThree = hamburger.querySelector('.line-three');
+        const lines =[lineOne,lineTwo,lineThree];
+        const timeLine = new TimelineMax({});
+        const toggle = new TimelineMax({paused:true,reversed:true});
+        const minusTl = new TimelineMax({paused:true,reversed:true});
+
+        hamburger.addEventListener('mouseenter',_=>{
+            console.log('mouse enter33')
+            if(hamburger.classList.contains('js-x')){
+                return;
+            }
+            timeLine.staggerTo(lines, .5, 
+            {scaleX:1.5, repeat:1, yoyo: true,ease:Power2.easeInOut},
+            0.1)
+        })
+
+        /**
+            最后一个参数的用法，.play()后，
+            无: 等上一个动画完成后执行
+            0: 立即开始执行，不会等待前面的变换（队列）
+            n: 等待n秒后执行（绝对值）
+            '+=n': 上一步完成后等待n秒再执行（相对值±）
+            'label': 上一步完成后拥有这个label的动画立即同时执行
+            'label+n': 同上，但要迟n秒（相对值±）
+        */ 
+        toggle
+            .to(lineTwo, .21,{scaleX:0})
+            .to(lineOne, .2,{rotation:45,transformOrigin:'50% 50%',y:8},'cross')
+            .to(lineThree, .2,{rotation:-45,transformOrigin:'50% 50%',y:-8},'cross');
+        minusTl
+            .to(lineTwo, .21,{scaleX:0})
+            .to(lineOne, .2,{transformOrigin:'50% 50%',y:8},'cross')
+            .to(lineThree, .2,{transformOrigin:'50% 50%',y:-8},'cross');
+        function crossFun(){
+            hamburger.classList.toggle('js-x');
+            toggle.reversed()?toggle.play():toggle.reverse();
+        }
+        function minusFun(){
+            minusTl.reversed()?minusTl.play():minusTl.reverse();
+        }
+    </script>
+</body>
+</html>

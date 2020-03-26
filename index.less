@@ -1,0 +1,49 @@
+.study {
+    .wrapper {
+        .header {
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            display: flex;
+
+            button {
+                flex: 1;
+                font-size: 25px;
+                &.active {
+                    color: white;
+                    background-color: red;
+                }
+            }
+        }
+
+        .item {
+            display: flex;
+            // flex-direction: row;
+            margin: 10px 0;
+            width: 100%;
+            border-bottom: 1px solid #eee;
+
+            img{
+                width: 95px;
+                height: 110px;
+                margin-right: 15px;
+                box-shadow: 2px 2px 4px 3px grey;
+            }
+
+            .title {
+                font-weight: bold;
+            }
+
+            .desc {
+                text-decoration: none;
+                color: #666;
+                padding-left: 2em;
+                box-sizing: border-box;
+            }
+
+            &:hover {
+                background-color: #eee;
+            }
+        }
+    }
+}

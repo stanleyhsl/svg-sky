@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+
+    <title>酷炫按钮</title>
+
+    <style>
+      html, body {
+          background: #333;
+          height: 100%;
+          overflow: hidden;
+          text-align: center;
+        }
+      body{
+        background-size: 100% 100%;
+        background-image: url(https://cdn.weipaitang.com/static/202003243442f2d3-9150-f2d39150-43de-79c65e662d25-W1166H792/w/640);
+      }
+        .svg-wrapper {
+          height: 60px;
+          margin: 0 auto;
+          position: relative;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 320px;
+        }
+
+        .shape {
+          /* fill: transparent; */
+          stroke-dasharray: 140 540;
+          stroke-dashoffset: -474;
+          stroke-width: 8px;
+          stroke: #19f6e8;
+        }
+
+        .text,.end {
+          position: relative;
+          color: white;
+          font-family: 'Roboto Condensed';
+          font-size: 22px;
+          letter-spacing: 8px;
+          line-height: 32px;
+          position: relative;
+          user-select: none;
+          top: -48px;
+        }
+
+        .end{
+          margin-top: 20px;
+          color: blue;
+          border-bottom: 2px solid blue;
+          width: 150px;
+          height: 80px;
+          display: flex;
+          align-items: flex-end;
+          justify-content: center;
+          background-size:100% 200%;
+        }
+        .end.down{
+          background-image: radial-gradient(50% 50%,  yellow, transparent);
+        }
+
+        .text::before{
+          color:pink;
+          position: absolute;
+          top: 50%;
+          transform:translateY(-50%);
+          transform-origin: 35% 50%;
+          content: '❤';
+          left:25%;
+          -webkit-animation: zoomOut .5s infinite;
+          animation: zoomOut .5s infinite;
+        }
+
+        @keyframes zoomOut {
+          0% {
+            transform:translateY(-50%) scale(.6);
+            opacity: .3;
+          }
+          100% {
+            transform:translateY(-50%) scale(1.8);
+            opacity: 1;
+          }
+        }
+        @keyframes draw {
+          0% {
+            stroke-dasharray: 140 540;
+            stroke-dashoffset: -474;
+            stroke-width: 8px;
+          }
+          100% {
+            stroke-dasharray: 760;
+            stroke-dashoffset: 0;
+            stroke-width: 2px;
+          }
+        }
+
+        .svg-wrapper:hover .shape {
+          -webkit-animation: 0.3s draw linear forwards;
+          animation: 0.3s draw linear forwards;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="svg-wrapper">
+      <svg height="60" width="320" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="btnBackTrans" x1="0" y1="1" x2="1" y2="1" >
+              <stop offset="0" stop-color="hsl(60,100%,50%,0)"/>
+              <stop offset=".5" stop-color="hsl(60,100%,50%,0.8)"/>
+              <stop offset="1" stop-color="hsl(60,100%,50%,0)"/>
+            </linearGradient>
+            <radialGradient id="light-r" cx="0.5" cy="0" r="0.5">
+              <stop offset="0" stop-color="hsl(60,100%,50%,0)"/>
+              <stop offset="1" stop-color="hsl(60,100%,50%,0.8)"/>
+          </radialGradient>
+          </defs>
+        <rect id="btnBack" class="shape" height="60" width="320" fill='transparent';/>
+      </svg>
+      <div class="text">开始</div>
+    </div>
+    <div class="end">结束</div>
+  </body>
+  <script>
+    const isPc =!navigator.userAgent.toLowerCase().match(/phone|ios|android|ipad|ipod|tablet/g);
+    var btn=document.getElementsByClassName('text')[0];
+    var btnEnd=document.getElementsByClassName('end')[0];
+    btn.addEventListener(isPc?'mousedown':'touchstart',function(){
+      btnBack.setAttributeNS(null,'fill',"url(#btnBackTrans)");   
+    })
+    btn.addEventListener(isPc?'mouseup':'touchend',function(){
+      btnBack.setAttributeNS(null,'fill','transparent');   
+    })
+    btnEnd.addEventListener(isPc?'mousedown':'touchstart',function(){
+      this.classList.add('down')
+      console.log(this)
+    })
+    btnEnd.addEventListener(isPc?'mouseup':'touchend',function(){
+      this.classList.remove('down')  
+    })
+  </script>
+</html>

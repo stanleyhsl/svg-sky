@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>path动画</title>
+    <style type="text/css">
+        svg {
+            width: 300px;
+            display: block;
+            position: absolute;
+        }
+        
+        .ball {
+            width: 10px;
+            height: 30px;
+            background-color: red;
+            /* border-radius: 50%; */
+            offset-path: path('M10 80 Q 77.5 10, 145 80 T 280 80');
+            offset-distance: 0%;
+            animation: red-ball 2s linear alternate infinite;
+        }
+        
+        @keyframes red-ball {
+            from {
+                offset-distance: 0%;
+            }
+            to {
+                offset-distance: 100%;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <p>
+        offset-path 是一个 CSS 属性，它表示元素的运动路径； offset-distance：同样是一个 CSS 属性，定义了元素在路径上运动的距离，单位是数值或百分比；
+    </p>
+    <svg width="300px" height="175px" version="1.1">
+        <path fill="transparent" stroke="#888888" stroke-width="1" d="M10 80 Q 77.5 10, 145 80 T 280 80" class="path"></path>
+    </svg>
+
+    <div class="ball"></div>
+</body>
+
+</html>
