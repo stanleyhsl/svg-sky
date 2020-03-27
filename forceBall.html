@@ -107,9 +107,10 @@
             if(maxf < .12){
                 svgLine.setAttribute('stroke', '#eee');
                 svgLine.setAttribute('stroke-dasharray', '');
-                points.forEach(function(pa) {
-                    pa.circle.setAttribute('fill', '#eee');
-                });
+                points.forEach(p=>p.disable());
+                // points.forEach(function(pa) {
+                //     pa.circle.setAttribute('fill', '#eee');
+                // });
                 return;
             }
 

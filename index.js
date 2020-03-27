@@ -13,7 +13,7 @@
        { name: '菜单图标', url: 'menuCss', desc: ['css，css图标变形动画'],icon:'https://cdn.weipaitang.com/static/20200326d4cd0a70-9804-0a709804-21ce-718049fbf4f7-W768H674' },
    ];
    const cfgLib = [
-       { name: '菜单图标', url: 'menuGs', desc: ['GreenSock，一个不错的图标变形动画'],icon:'https://cdn.weipaitang.com/static/2020032681a5770e-6de4-770e6de4-f6c9-c1571700a9ba-W684H518' },
+       { name: '菜单图标', url: 'menuGs', desc: ['GreenSock，一个不错的图标变形时序动画'],icon:'https://cdn.weipaitang.com/static/2020032681a5770e-6de4-770e6de4-f6c9-c1571700a9ba-W684H518' },
        { name: '变形动画', url: 'animal', desc: ['GreenSock，第三方库+插件'], icon:'https://cdn.weipaitang.com/static/202003265e60c3ea-cce0-c3eacce0-6588-d19e27cfe990-W734H654'},
        { name: '非线性转动动画', url: 'ease', desc: ['GreenSock，第三方库，TweenMax'], icon:'https://cdn.weipaitang.com/static/202003267166897e-455c-897e455c-3809-afa86f00b95c-W732H782'},
        { name: '绿人变形动画', url: 'man', desc: ['GreenSock，第三方库，TweenMax'], icon:'https://cdn.weipaitang.com/static/202003264922292a-b41e-292ab41e-4b9b-7b3b993455ca-W422H482'},

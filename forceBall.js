@@ -41,12 +41,12 @@
         class Point{
             constructor(index,total){
                 this.name=name;
-                this.color = 'hsl(' + (360 * index/total) + ', 100%, 60%)'
+                this.color = 360 * index/total;
                 var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
                 this.circle = circle; // svg对象
               
                 circle.setAttribute('r', 20);
-                circle.setAttribute('fill', this.color);
+                circle.setAttribute('fill', `hsl(${this.color}, 100%, 60%)`);
                 circle.setAttribute('stroke', '#999');
                 circle.setAttribute('stroke-width', '1');
                 this.initPos();
@@ -60,6 +60,23 @@
                 this.s = new Vector(x, y); // 中心点
                 this.v = new Vector(); // 矢量速度0
                 this.a = new Vector(); // 矢量加速度0
+            }
+
+            getColor(s,l){
+                return `hsl(${this.color}, ${s}%, ${l}%)`
+            }
+            disable(){
+                // 给小球增加一个动画，变灰
+                //<animate attributeName="fill" from=”<color>” to=”#eee dur="1s" repeatCount="1" />
+                const animate = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+              
+                animate.setAttribute("attributeName","fill")//因为是填充色，所以用fill属性；如果渐变的是线条的颜色，就改成stroke属性
+                // animate.setAttribute('attributeType','XML')
+                // animate.setAttribute('fill','freeze');
+                animate.setAttribute('values', `${this.getColor(100,60)};${this.getColor(0,100)};${this.getColor(0,100)};${this.getColor(100,60)}`);
+                animate.setAttribute('dur', '3s');
+                animate.setAttribute('repeatCount', '5');
+                this.circle.appendChild(animate);
             }
 
             mounte(svgDom){

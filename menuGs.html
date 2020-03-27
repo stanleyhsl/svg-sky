@@ -16,16 +16,16 @@
     </style>
 </head>
 <body>
-    <h1>GreenSock实现的关键帧动画</h1>
+    <h1>GreenSock实现的时序动画</h1>
     <svg class="hamburger" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
     <line class="line-one" x1="25" y1="42" x2="75" y2="42" fill="none" stroke="red" stroke-width="4"/>
     <line class="line-two" x1="25" y1="50" x2="75" y2="50" fill="none" stroke="green" stroke-width="4"/>
     <line class="line-three" x1="25" y1="58" x2="75" y2="58" fill="none" stroke="blue" stroke-width="4"/>
     </svg>
     <hr>
-    <button class="btn1" onclick="crossFun()">变成X动画</button>
-    <button class="btn2" onclick="minusFun()">变成——动画</button>
-    <p> 两个动画可以组合起来</p>
+    <button class="btn1" onclick="crossFun()">变成 X 动画</button>
+    <button class="btn2" onclick="minusFun()">变成 - 动画</button>
+    <p> 两个动画可以按时序组合起来进行，可以自由地设定触发时机和次序</p>
     <script>
         const hamburger =document.querySelector('.hamburger');
         const lineOne = hamburger.querySelector('.line-one');
